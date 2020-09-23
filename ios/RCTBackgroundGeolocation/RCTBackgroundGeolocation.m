@@ -97,7 +97,7 @@ RCT_EXPORT_METHOD(stop)
     }
 }
 
-RCT_EXPORT_METHOD(switchMode:(NSNumber*)mode success:(RCTResponseSenderBlock)success failure:(RCTResponseSenderBlock)failure)
+RCT_EXPORT_METHOD(switchMode:(NSNumber* _Nonnull)mode success:(RCTResponseSenderBlock)success failure:(RCTResponseSenderBlock)failure)
 {
     RCTLogInfo(@"RCTBackgroundGeolocation #switchMode");
     [facade switchMode:[mode integerValue]];
