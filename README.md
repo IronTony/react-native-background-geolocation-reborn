@@ -1,29 +1,10 @@
-# @mauron85/react-native-background-geolocation
-
-[![CircleCI](https://circleci.com/gh/mauron85/react-native-background-geolocation/tree/master.svg?style=shield)](https://circleci.com/gh/mauron85/react-native-background-geolocation/tree/master)
-[![issuehunt-shield-v1](issuehunt-shield-v1.svg)](https://issuehunt.io/r/mauron85/react-native-background-geolocation/)
+# react-native-background-geolocation-reborn
+This package is a fork of the awesome `[@mauron85/react-native-background-geolocation](https://www.npmjs.com/package/@mauron85/react-native-background-geolocation)`. Unfortunately at the moment the original package seems not to be mantained.
+So here the fixes not merged in the original package, and some of my fixes to let the package can compile on latest iOS and Android versions and the latest React-Native >= 0.60 (tested on 0.63.2)
 
 # 🔥🔥🔥 Upgraded submodules for iOS and Android 🔥🔥🔥
 Now it compiles on Android latest releases
 
-## We're moving
-
-Npm package is now [@mauron85/react-native-background-geolocation](https://www.npmjs.com/package/@mauron85/react-native-background-geolocation)!
-
-# Donation
-
-Please support my work and continued development with your donation.
-
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6GW8FPTE6TV5J)
-
-## Submitting issues
-
-All new issues should follow instructions in [ISSUE_TEMPLATE.md](https://raw.githubusercontent.com/mauron85/react-native-background-geolocation/master/ISSUE_TEMPLATE.md).
-A properly filled issue report will significantly reduce number of follow up questions and decrease issue resolving time.
-Most issues cannot be resolved without debug logs. Please try to isolate debug lines related to your issue.
-Instructions for how to prepare debug logs can be found in section [Debugging](#debugging).
-If you're reporting an app crash, debug logs might not contain all the necessary information about the cause of the crash.
-In that case, also provide relevant parts of output of `adb logcat` command.
 
 ## Issue Hunt
 
@@ -101,12 +82,13 @@ The repository [react-native-background-geolocation-example](https://github.com/
 ## Quick example
 
 ```javascript
-import React, { Component } from 'react';
+import * as React from 'react';
+import { useEffect } from 'react';
 import { Alert } from 'react-native';
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 
-class BgTracking extends Component {
-  componentDidMount() {
+const BgTracking = () => {
+  useEffect(() => {
     BackgroundGeolocation.configure({
       desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
       stationaryRadius: 50,
@@ -208,10 +190,9 @@ class BgTracking extends Component {
 
     // you can also just start without checking for status
     // BackgroundGeolocation.start();
-  }
-
-  componentWillUnmount() {
-    // unregister all event listeners
+  }, []);
+  
+  return () => {
     BackgroundGeolocation.removeAllListeners();
   }
 }
@@ -219,14 +200,14 @@ class BgTracking extends Component {
 export default BgTracking;
 ```
 
-## Instalation
+## Installation
 
 ### Installation
 
 Add the package to your project
 
 ```
-yarn add https://github.com/IronTony/react-native-background-geolocation
+yarn add https://github.com/IronTony/react-native-background-geolocation-reborn
 ```
 
 ### Automatic setup
@@ -240,7 +221,7 @@ node ./node_modules/@mauron85/react-native-background-geolocation/scripts/postli
 
 ### Manual setup
 
-#### Android setup
+#### Android setup - RN < 0.60
 
 In `android/settings.gradle`
 
@@ -285,22 +266,39 @@ public class MainApplication extends Application implements ReactApplication {
 }
 ```
 
-#### iOS setup
+#### Android setup - RN >= 0.60
+
+In `android/settings.gradle`
+
+```gradle
+...
+include ':@mauron85_react-native-background-geolocation-common'
+project(':@mauron85_react-native-background-geolocation-common').projectDir = new File(rootProject.projectDir, '../node_modules/@mauron85/react-native-background-geolocation/android/common')
+...
+```
+
+#### iOS setup - RN < 0.60
 
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
 2. Add `./node_modules/@mauron85/react-native-background-geolocation/ios/RCTBackgroundGeolocation.xcodeproj`
 3. In the XCode project navigator, select your project, select the `Build Phases` tab and in the `Link Binary With Libraries` section add **libRCTBackgroundGeolocation.a**
-4. Add `UIBackgroundModes` **location** to `Info.plist`
-5. Add `NSMotionUsageDescription` **App requires motion tracking** to `Info.plist` (required by ACTIVITY_PROVIDER)
+
+
+#### iOS setup - RN > 0.60
+
+1. From the Terminal, just type `npx pod install`
+2. From Xcode, `Your project -> Signing & Capabilities`, add `BackgroundModes` **Location updates**
+3. Add `NSMotionUsageDescription` **App requires motion tracking** to `Info.plist` (required by ACTIVITY_PROVIDER)
 
 For iOS before version 11:
 
-6. Add `NSLocationAlwaysUsageDescription` **App requires background tracking** to `Info.plist`
+4. Add `NSLocationAlwaysUsageDescription` **App requires background tracking** to `Info.plist`
 
 For iOS 11:
 
-6. Add `NSLocationWhenInUseUsageDescription` **App requires background tracking** to `Info.plist`
-7. Add `NSLocationAlwaysAndWhenInUseUsageDescription` **App requires background tracking** to `Info.plist`
+4. Add `NSLocationWhenInUseUsageDescription` **App requires background tracking** to `Info.plist`
+5. Add `NSLocationAlwaysAndWhenInUseUsageDescription` **App requires background tracking** to `Info.plist`
+
 
 ## API
 
