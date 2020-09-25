@@ -286,7 +286,7 @@ project(':@mauron85_react-native-background-geolocation-common').projectDir = ne
 
 #### iOS setup - RN > 0.60
 
-1. From the Terminal, just type `npx pod install`
+1. From the Terminal, just type `npx pod-install`
 2. From Xcode, `Your project -> Signing & Capabilities`, add `BackgroundModes` **Location updates**
 3. Add `NSMotionUsageDescription` **App requires motion tracking** to `Info.plist` (required by ACTIVITY_PROVIDER)
 
