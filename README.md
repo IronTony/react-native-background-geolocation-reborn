@@ -2,7 +2,7 @@
 This package is a fork of the awesome [@mauron85/react-native-background-geolocation](https://www.npmjs.com/package/@mauron85/react-native-background-geolocation). Unfortunately at the moment the original package seems not to be mantained.
 So here the fixes not merged in the original package, and some of my fixes to let the package can compile on latest iOS and Android versions and the latest React-Native >= 0.60 (tested on 0.63.2)
 
-# 🔥🔥🔥 Upgraded submodules for iOS and Android 🔥🔥🔥
+# 🔥🔥 Upgraded submodules for iOS and Android 🔥🔥
 Now it compiles on Android latest releases
 
 
